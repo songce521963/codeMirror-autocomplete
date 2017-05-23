@@ -1,0 +1,42 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">  
+<html xmlns="http://www.w3.org/1999/xhtml">  
+<head>  
+    <title>codeMirror测试</title>  
+    <link type="text/css" rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css" />  
+    <link type="text/css" rel="stylesheet" href="bower_components/codemirror/theme/3024-day.css" />  
+    <link type="text/css" rel="stylesheet" href="bower_components/codemirror/addon/hint/show-hint.css" />  
+    <script type="text/javascript" src="bower_components/codemirror/lib/codemirror.js"></script>  
+    <script type="text/javascript" src="bower_components/codemirror/addon/hint/show-hint.js"></script>
+    <script type="text/javascript" src="bower_components/codemirror/mode/velocity/velocity.js"></script>  
+    <script type="text/javascript" src="velocity-hint.js"></script>  
+      
+    <style>.CodeMirror {border: 1px solid black;}</style>  
+</head>  
+  
+<style>  
+        .CodeMirror {  
+            border: 1px solid black;  
+        }  
+    </style>  
+  
+    <body>  
+        <h2>SQL编辑器</h2>  
+        <form>  
+            <textarea id="code" name="code">
+              #set($obj = 1)  
+            </textarea>  
+        </form>  
+        <script>  
+             CodeMirror.velocityContext = "server software env";  //提取到外部，方便从后台获取数据  
+            CodeMirror.velocityCustomizedKeywords = "server.ip server.cache software.conf software.version software.tags.count";  
+            var editor = CodeMirror.fromTextArea(document.getElementById("code"), {  
+              lineNumbers: true,  
+              extraKeys: {"Ctrl-Q": "autocomplete"},  //避免热键冲突  
+              mode: {name: "velocity", globalVars: true}  
+            });  
+            editor.on('change', function() {  
+                editor.showHint();  //满足自动触发自动联想功能  
+            });  
+        </script>  
+    </body>  
+</html>
